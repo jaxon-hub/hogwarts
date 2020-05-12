@@ -46,6 +46,10 @@ class Calc:
             return '分母不能等于0'
 
 
+def return_data():
+    return [(1, 2, 0.5), (6, 3, 2)]
+
+
 if __name__ == '__main__':
     print(Calc().add(1, 2))
     print(Calc().division(2, 0))
