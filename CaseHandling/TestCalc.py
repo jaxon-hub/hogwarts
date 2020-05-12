@@ -14,6 +14,7 @@ class TestCalc:
         result = self.calc.add(1, 2)
         assert 3 == result
 
+    @pytest.mark.run(order=1)
     def test_add_two(self):
         result = self.calc.add(-1, 5)
         assert 4 == result
@@ -118,10 +119,21 @@ class TestCalc:
         result = self.calc.division(9999999, 9999999)
         assert 1 == result
 
+    data_1 = [
+        (1, 2, 3),
+        (4, 5, 9)
+    ]
+
+    # @pytest.mark.parametrize('a, b, expect', data_1)
+    @pytest.mark.division
     def test_division_seven(self):
         result = self.calc.division(0, -0)
         assert "分母不能等于0" == result
 
 
 if __name__ == '__main__':
-    pytest.main()
+    # pytest.main()
+    # pytest.main(['-vs', 'TestCalc.py::TestCalc::test_division_seven'])
+    # 运行spec_001_modul_test模块中用例名称包含seven的用例
+    # pytest.main(['TestCalc.py -k " test_division and not two"'])
+    pytest.main(['-m', 'division'])
