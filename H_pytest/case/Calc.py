@@ -43,14 +43,25 @@ class Calc:
             result = a/b
             return round(result, 2)
         except:
-            return '分母不能等于0'
+            return 'Divisor cannot be 0'
 
 
 def return_data():
-    return [(1, 2, 0.5), (6, 3, 2)]
+    return [(1, 2, 1), (6, 3, 2)]
+
+
+def return_F():
+    return False
+
+def est():
+    for x in range(5):
+        yield x     # 生成器： return x+暂停 并且记住了上一步操作的位置
 
 
 if __name__ == '__main__':
-    print(Calc().add(1, 2))
-    print(Calc().division(2, 0))
-
+    # print(Calc().add(1, 2))
+    # print(Calc().division(2, 0))
+    p = est()
+    print(next(p))
+    print(next(p))
+    print(next(p))
