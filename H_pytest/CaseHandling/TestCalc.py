@@ -132,7 +132,7 @@ class TestCalc:
         result = self.calc.division(-1, -2)
         assert 0.5 == result
 
-    def test_division_four(self,login):
+    def test_division_four(self,self):
         result = self.calc.division(-2.2222, -3.33333)
         assert 0.67 == result
 
@@ -143,6 +143,7 @@ class TestCalc:
         assert 0 == result
 
     @pytest.mark.skipif(return_F() == True, reason="xxx")
+    @pytest.mark.css
     def test_division_six(self):
         result = self.calc.division(9999999, 9999999)
         assert 1 == result
@@ -152,13 +153,16 @@ class TestCalc:
     @pytest.mark.div
     def test_division_seven(self, a, b, c):
         result = self.calc.division(a, b)
+        print('11111')
         assert c == result
 
 
 if __name__ == '__main__':
     # print(return_date())
     # pytest.main()
-    pytest.main(['-vs', 'TestCalc.py::TestCalc'])
+    # pytest.main(['-vs', 'TestCalc.py::TestCalc::test_division_seven'])
     # 运行spec_001_modul_test模块中用例名称包含seven的用例
-    # pytest.main(['-vs', "TestCalc.py", "-m" "one"])
-    # pytest.main(["-sx", "TestCalc.py", "-m", "div", "--maxfail=1"])
+    # pytest.main(['TestCalc.py -k " test_division and not two"'])
+    # pytest.main(["-s", "TestCalc.py", "-m", "div"])
+    # pytest.main(["-v", "TestCalc.py", "-k", "six or seven"])
+    pytest.main(["--collect-only", "TestCalc.py"])
