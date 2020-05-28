@@ -1,0 +1,8 @@
+- [1,2,0.5]
+- [2,0,'Divisor cannot be 0']
+#defaults: &defaults
+#  case: [1,2,0.5]
+
+#case+:
+#  add: [1,2,3]
+#  <<: *defaults

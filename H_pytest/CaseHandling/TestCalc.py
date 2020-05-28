@@ -2,12 +2,37 @@
 @Time    : 2020/5/9 0009 00:15
 @Author  : jaxon
 """
-from case.Calc import *
+import yaml
+from H_pytest.case.Calc import *
 import pytest
+import sys
+
+
+skipmark = pytest.mark.skip(reason="不能在window上运行=====")
+skipifmark = pytest.mark.skipif(sys.platform == 'win32', reason="不能在window上运行啦啦啦=====")
+
+
+def return_date():
+    with open(r'E:\Hogwarts_project\hogwarts\H_pytest\date\case_date.yml') as f:
+        f = yaml.safe_load(f)
+    return f
 
 
 class TestCalc:
+
+    @pytest.fixture(scope='function', autouse=True)
+    def login(self):
+        print("登录啊")
+        ms = "quit"
+        yield ms
+        print("yield")
+
+    # def teardown(self):
+
+        # print("teardown:每个用例结束后执行")
+
     def setup(self):
+        print("setup:每个用例前后执行")
         self.calc = Calc()
 
     def test_add_one(self):
@@ -107,20 +132,23 @@ class TestCalc:
         result = self.calc.division(-1, -2)
         assert 0.5 == result
 
-    def test_division_four(self):
+    def test_division_four(self,login):
         result = self.calc.division(-2.2222, -3.33333)
         assert 0.67 == result
 
+    # @pytest.mark.skip(msg="xxx")
+    @skipmark
     def test_division_five(self):
         result = self.calc.division(0, -2.2222)
         assert 0 == result
 
+    @pytest.mark.skipif(return_F() == True, reason="xxx")
     def test_division_six(self):
         result = self.calc.division(9999999, 9999999)
         assert 1 == result
 
-    # @pytest.mark.parametrize("a,b,c", [(1, 2, 0.5), (1, 1, 1)])
-    @pytest.mark.parametrize("a,b,c", return_data())
+    @pytest.mark.parametrize("a,b,c", return_date())
+    # @pytest.mark.parametrize("a,b,c", return_data())
     @pytest.mark.div
     def test_division_seven(self, a, b, c):
         result = self.calc.division(a, b)
@@ -128,8 +156,9 @@ class TestCalc:
 
 
 if __name__ == '__main__':
+    # print(return_date())
     # pytest.main()
-    # pytest.main(['-vs', 'TestCalc.py::TestCalc::test_division_seven'])
+    pytest.main(['-vs', 'TestCalc.py::TestCalc'])
     # 运行spec_001_modul_test模块中用例名称包含seven的用例
-    # pytest.main(['TestCalc.py -k " test_division and not two"'])
-    pytest.main(["-s", "TestCalc.py", "-m", "div"])
+    # pytest.main(['-vs', "TestCalc.py", "-m" "one"])
+    # pytest.main(["-sx", "TestCalc.py", "-m", "div", "--maxfail=1"])
