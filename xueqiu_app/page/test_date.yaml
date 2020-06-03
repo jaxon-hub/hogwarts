@@ -1,0 +1,10 @@
+#测试数据参数化
+-
+  - date
+  - date1
+-
+  - value1
+  - value2
+#or
+#- [date,date2]
+#- [date22,date33]

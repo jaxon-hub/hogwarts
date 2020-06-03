@@ -132,7 +132,7 @@ class TestCalc:
         result = self.calc.division(-1, -2)
         assert 0.5 == result
 
-    def test_division_four(self,self):
+    def test_division_four(self):
         result = self.calc.division(-2.2222, -3.33333)
         assert 0.67 == result
 

@@ -11,3 +11,8 @@ pytest==5.4.2
 six==1.14.0
 wcwidth==0.1.9
 zipp==3.1.0
+
+PyYAML~=5.3.1
+Appium-Python-Client~=1.0.1
+Faker~=4.1.0
+selenium~=3.141.0

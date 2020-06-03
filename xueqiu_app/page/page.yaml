@@ -1,0 +1,16 @@
+mainpage:
+  - by: xpath
+    locator: //*[@resource-id='android:id/tabhost']//*[@text='行情']
+    action: click
+#marketpage:
+#  - by: id
+#    locator: com.xueqiu.android:id/action_search
+#    action: click
+#mainpage:
+#  - by: xpath
+#    locator: //*[@resource-id='android:id/tabhost']//*[@text='行情']
+#    action: click
+#mainpage:
+#  - by: xpath
+#    locator: //*[@resource-id='android:id/tabhost']//*[@text='行情']
+#    action: click
