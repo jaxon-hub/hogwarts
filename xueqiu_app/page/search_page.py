@@ -9,7 +9,7 @@ from xueqiu_app.page.base_page import BasePage
 
 class Search(BasePage):
 
-    def search_for_name(self):
+    def search_for_name(self, name):
         """在搜索页面输入alibba"""
         self.find(MobileBy.ID, "com.xueqiu.android:id/search_input_text").send_keys("alibaba")
         """点击第二个筛选项"""
@@ -18,10 +18,10 @@ class Search(BasePage):
         self.find(MobileBy.XPATH, "//*[@resource-id='com.xueqiu.android:id/code' and @text='BABA']").click()
         """/..找上一级的父元素；/../..上上级"""
         """点击加自选"""
-        self.find(MobileBy.XPATH, "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='阿里巴巴']/../..//*[@text='加自选']").click()
+        self.find(MobileBy.XPATH, f"//*[@resource-id='com.xueqiu.android:id/stockName' and @text='{name}']/../..//*[@text='加自选']").click()
         return self
 
-    def is_select(self):
+    def is_select(self, name):
         """验证元素（已添加）是否存在（input_name方法内点击的加自选）"""
-        select_elements = self.finds(MobileBy.XPATH, "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='阿里巴巴']/../..//*[@text='已添加']")
+        select_elements = self.finds(MobileBy.XPATH, f"//*[@resource-id='com.xueqiu.android:id/stockName' and @text='{name}']/../..//*[@text='已添加']")
         return len(select_elements) > 0

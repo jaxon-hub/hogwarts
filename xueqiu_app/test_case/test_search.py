@@ -15,7 +15,7 @@ class Test_case:
 
     def test_search(self):
         search_re = self.main.goto_market().goto_search()
-        assert search_re.search_for_name().is_select()
+        assert search_re.search_for_name("阿里巴巴-SW").is_select("阿里巴巴-SW")
 
 
     @pytest.mark.parametrize("value, value1", yaml.safe_load(open("../page/test_date.yaml")))

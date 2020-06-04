@@ -11,6 +11,11 @@ from appium.webdriver.webdriver import WebDriver
 class BasePage:
     logging.basicConfig(level=logging.INFO)
     _driver: WebDriver
+    _black_list = [
+
+    ]
+    _max_num = len(_black_list)
+    _error_num = 0
 
     def __init__(self, driver:WebDriver = None):
         self._driver = driver
@@ -19,33 +24,38 @@ class BasePage:
         logging.info(f"调用find方法查询元素的方式为：{locator}")
         logging.info(f"调用find方法查询的元素为：{value}")
         elements: WebDriver
-        if isinstance(locator, tuple):
-            element = self._driver.find_element(*locator)
-        else:
-            element = self._driver.find_element(locator, value)
-
-        return element
+        try:
+            if isinstance(locator, tuple):
+                element = self._driver.find_element(*locator)
+            else:
+                element = self._driver.find_element(locator, value)
+            """如果找到元素则将_error_num设置为0"""
+            self._error_num = 0
+            """恢复隐式等待时间"""
+            self._driver.implicitly_wait(10)
+            return element
+        except Exception as e:
+            """出现异常将隐身等待时间设置小一点，快速处理弹窗"""
+            self._driver.implicitly_wait(2)
+            if self._error_num > self._max_num:
+                self._error_num += 1
+                raise e
+            for ele in self._black_list:
+                eleme = self._driver.find_elements(*ele)
+                if len(eleme) > 0:
+                    eleme[0].click()
+                    break
+            return self.find(*locator, value)
 
     def finds(self, locator, value:str = None):
-        _black_list = [
 
-        ]
         logging.info(f"调用finds方法查询元素的方式为：{locator}")
         logging.info(f"调用finds方法查询的元素为：{value}")
-        try:
-            elements: list
-            if isinstance(locator, tuple):
-                elements = self._driver.find_elements(*locator)
-            else:
-                elements = self._driver.find_elements(locator, value)
-            return elements
-        except:
-            for ele in _black_list:
-                element = self._driver.find_elements(*ele)
-                if len(element) > 0:
-                    element[0].click()
-                    break
-            return self.find(locator, value)
+        if isinstance(locator, tuple):
+            elements = self._driver.find_elements(*locator)
+        else:
+            elements = self._driver.find_elements(locator, value)
+        return elements
 
     def find_text(self, locator, value:str = None):
 
