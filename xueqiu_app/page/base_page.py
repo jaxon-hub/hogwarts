@@ -30,25 +30,11 @@ class BasePage:
         logging.info(f"调用find方法查询元素的方式为：{locator}")
         logging.info(f"调用find方法查询的元素为：{value}")
         elements: WebDriver
-        # try:
-        #     if isinstance(locator, tuple):
-        #         element = self._driver.find_element(*locator)
-        #     else:
-        #         element = self._driver.find_element(locator, value)
-        #     return element
-        # except:
-        #     for black in  self._black_list:
-        #         eleme = self._driver.find_elements(*black)
-        #         if len(eleme) > 0:
-        #             eleme[0].click()
-        #             break
-        #     return self.find(locator, value)
         if isinstance(locator, tuple):
             element = self._driver.find_element(*locator)
         else:
             element = self._driver.find_element(locator, value)
         return element
-
 
     @handle_black
     def finds(self, locator, value:str = None):
@@ -56,40 +42,9 @@ class BasePage:
         logging.info(f"调用finds方法查询的元素为：{value}")
         if isinstance(locator, tuple):
             elements = self._driver.find_elements(*locator)
-            # if elements:
-            #     return elements
-            # else:
-            #     raise BaseException
         else:
             elements = self._driver.find_elements(locator, value)
-            # if elements:
-            #     return elements
-            # else:
-            #     raise BaseException
         return elements
-        # try:
-        #     if isinstance(locator, tuple):
-        #         element = self._driver.find_elements(*locator)
-        #         if element:
-        #             return element
-        #         else:
-        #             raise BaseException
-        #     else:
-        #         element = self._driver.find_elements(locator, value)
-        #         if element:
-        #             return element
-        #         else:
-        #             raise BaseException
-
-            # return element
-        # except:
-        #     for black in  self._black_list:
-        #         eleme = self._driver.find_elements(*black)
-        #         logging.info(f"调用finds,---eleme元素为：{eleme}")
-        #         if len(eleme) > 0:
-        #             eleme[0].click()
-        #             break
-        #     return self.finds(locator, value)
 
     def find_text(self, locator, value:str = None):
 
@@ -100,36 +55,36 @@ class BasePage:
 
         return element_text
 
-    # def load_yaml(self, file_path, page_name):
-    #     try:
-    #         with open(file_path) as f:
-    #             yaml_date = yaml.safe_load(f)
-    #             if page_name in yaml_date.keys():
-    #                 for date in yaml_date[page_name]:
-    #                     if "by" in date.keys():
-    #                         print(date["by"],date["locator"])
-    #                         element = self.find(date["by"],date["locator"])
-    #                         if date["action"] == "click":
-    #                             element.click()
-    #                         if date["action"] == "send_keys":
-    #                             element.send_keys(date["key"])
-    #     except Exception as e:
-    #         logging.info(f"load_yaml方法异常：{e}，文件路径为：{file_path}")
-    #         raise e
-
-    def load_yaml(self, file_path):
+    def load_yaml(self, file_path, page_name):
         try:
             with open(file_path) as f:
                 yaml_date = yaml.safe_load(f)
-            for date in yaml_date:
-                if "action" in date.keys():
-                    if date["action"] == "click":
-                        print(date["by"], date["locator"])
-                        print(date["action"])
-                        self.find(date["by"], date["locator"]).click()
+                if page_name in yaml_date.keys():
+                    for date in yaml_date[page_name]:
+                        if "by" in date.keys():
+                            print(date["by"],date["locator"])
+                            element = self.find(date["by"],date["locator"])
+                            if date["action"] == "click":
+                                element.click()
+                            if date["action"] == "send_keys":
+                                element.send_keys(date["key"])
         except Exception as e:
             logging.info(f"load_yaml方法异常：{e}，文件路径为：{file_path}")
             raise e
+
+    # def load_yaml(self, file_path):
+    #     try:
+    #         with open(file_path) as f:
+    #             yaml_date = yaml.safe_load(f)
+    #         for date in yaml_date:
+    #             if "action" in date.keys():
+    #                 if date["action"] == "click":
+    #                     print(date["by"], date["locator"])
+    #                     print(date["action"])
+    #                     self.find(date["by"], date["locator"]).click()
+    #     except Exception as e:
+    #         logging.info(f"load_yaml方法异常：{e}，文件路径为：{file_path}")
+    #         raise e
 
 
 if __name__ == '__main__':

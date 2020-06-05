@@ -24,7 +24,7 @@ def aa():
             print('111')
         else:
             b = []
-            if b:
+            if len(b) > 0:
                 print('112111', b)
                 return b,('8888')
             else:
@@ -35,4 +35,12 @@ def aa():
 if __name__ == '__main__':
     # ex(tmp)()
     # tmp()
-    print(aa())
+    # print(aa())
+    _black_list = [
+
+        (MobileBy.ID, "com.xueqiu.android:id/tv_left"),  # 评价弹窗
+        (MobileBy.ID, "com.xueqiu.android:id/tv_agree"),  # 同意协议弹窗
+    ]
+    for x in _black_list:
+        b = x
+        print(b)

@@ -27,20 +27,20 @@ def handle_black(func):
             instance._driver.implicitly_wait(5)
             """如果找到元素，则返回"""
             logging.info(f"element：{element}")
-            return element
-            # if element:
-            #     return element
-            # else:
-            #     raise Exception
+            """判断element是否为空，如果不为空则返回，如果为空则抛出异常"""
+            if element:
+                return element
+            else:
+                raise Exception
         except Exception as e:
             """出现异常将隐身等待时间设置小一点，快速处理弹窗"""
-            instance._driver.implicitly_wait(1)
+            instance._driver.implicitly_wait(0)
             if _error_num > _max_num:
                 """判断异常处理次数，如果大于_black_list内元素个数，则抛出异常"""
                 raise e
             _error_num += 1
             for ele in _black_list:
-                elelist = instance.finds(*ele)
+                elelist = instance._driver.find_elements(*ele)
                 logging.info(f"elelist为：{elelist}")
                 logging.info(f"ele：{ele}")
                 if len(elelist) > 0:
