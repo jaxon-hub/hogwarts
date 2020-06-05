@@ -16,6 +16,6 @@ class Mainpage(BasePage):
 
     def goto_market(self):
         """主页--行情"""
-        # self.find(MobileBy.XPATH, "//*[@resource-id='android:id/tabhost']//*[@text='行情']").click()
-        self.load_yaml("../page/page.yaml", "mainpage")
+        self.find(MobileBy.XPATH, "//*[@resource-id='android:id/tabhost']//*[@text='行情']").click()
+        # self.load_yaml("../page/page.yaml")
         return Market(self._driver)

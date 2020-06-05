@@ -20,7 +20,7 @@ class App(BasePage):
             app_drives["deviceName"] = "hogwarts"
             app_drives["appPackage"] = self._appPackage
             app_drives["appActivity"] = self._appActivity
-            app_drives["noReset"] = "true"
+            # app_drives["noReset"] = "true"
             app_drives["udid"] = yaml.safe_load(open("../page/config.yaml"))["config"]["udid"]
 
             self._driver = webdriver.Remote("http://localhost:4723/wd/hub", app_drives)

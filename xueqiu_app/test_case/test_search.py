@@ -15,10 +15,10 @@ class Test_case:
 
     def test_search(self):
         search_re = self.main.goto_market().goto_search()
-        assert search_re.search_for_name("阿里巴巴-SW").is_select("阿里巴巴-SW")
+        assert search_re.search_for_name("阿里巴巴").is_select("阿里巴巴")
 
-
-    @pytest.mark.parametrize("value, value1", yaml.safe_load(open("../page/test_date.yaml")))
-    def test_date_config(self, value, value1):
-        print(value)
-        print(value1)
+    #
+    # @pytest.mark.parametrize("value, value1", yaml.safe_load(open("../page/test_date.yaml")))
+    # def test_date_config(self, value, value1):
+    #     print(value)
+    #     print(value1)
