@@ -26,7 +26,6 @@ def handle_black(func):
             """恢复隐式等待时间"""
             instance._driver.implicitly_wait(5)
             """如果找到元素，则返回"""
-            logging.info(f"element：{element}")
             """判断element是否为空，如果不为空则返回，如果为空则抛出异常"""
             if element:
                 return element
@@ -41,8 +40,7 @@ def handle_black(func):
             _error_num += 1
             for ele in _black_list:
                 elelist = instance._driver.find_elements(*ele)
-                logging.info(f"elelist为：{elelist}")
-                logging.info(f"ele：{ele}")
+                logging.info(f"处理的黑名单元素为：{ele}")
                 if len(elelist) > 0:
                     logging.info(f"处理的黑名单元素为：{elelist[0]}")
                     elelist[0].click()

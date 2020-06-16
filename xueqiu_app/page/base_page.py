@@ -46,8 +46,8 @@ class BasePage:
             elements = self._driver.find_elements(locator, value)
         return elements
 
+    @handle_black
     def find_text(self, locator, value:str = None):
-
         if isinstance(locator,tuple):
             element_text = self._driver.find_element(*locator).text
         else:
@@ -57,17 +57,19 @@ class BasePage:
 
     def load_yaml(self, file_path, page_name):
         try:
-            with open(file_path) as f:
-                yaml_date = yaml.safe_load(f)
-                if page_name in yaml_date.keys():
-                    for date in yaml_date[page_name]:
-                        if "by" in date.keys():
-                            print(date["by"],date["locator"])
-                            element = self.find(date["by"],date["locator"])
-                            if date["action"] == "click":
-                                element.click()
-                            if date["action"] == "send_keys":
-                                element.send_keys(date["key"])
+            with open(file_path, encoding="utf-8") as f:
+                yaml_date:dict = yaml.safe_load(f)
+            if page_name in yaml_date.keys():
+                for date in yaml_date[page_name]:
+                    if "by" in date.keys():
+                        element = self.find(date["by"],date["locator"])
+                        if date["action"] == "click":
+                            element.click()
+                        if date["action"] == "send_keys":
+                            element.send_keys(date["key"])
+                        if date["action"] == "len > 0":
+                            eles = self.finds(date["by"],date["locator"])
+                            return len(eles) > 0
         except Exception as e:
             logging.info(f"load_yaml方法异常：{e}，文件路径为：{file_path}")
             raise e
@@ -89,5 +91,5 @@ class BasePage:
 
 if __name__ == '__main__':
     a = BasePage()
-    filepath = "page.yaml"
-    print(a.load_yaml(filepath))
+    filepath = "../page/page.yaml"
+    print(a.load_yaml(filepath,"searchpage"))

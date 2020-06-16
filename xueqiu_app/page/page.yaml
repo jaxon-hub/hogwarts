@@ -1,7 +1,27 @@
 mainpage:
   - by: xpath
-    locator: //*[@resource-id='android:id/tabhost']//*[@text='行情']
+    locator: "//*[@resource-id='android:id/tabhost']//*[@text='行情']"
     action: click
+searchpage:
+  - by: id
+    locator: "com.xueqiu.android:id/search_input_text"
+    action: send_keys
+    key: alibaba
+  - by: xpath
+    locator: "//*[@resource-id='com.xueqiu.android:id/code' and @text='BABA']"
+    action: click
+  - by: xpath
+    locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='阿里巴巴']/../..//*[@text='加自选']"
+    action: click
+isselect:
+  - by: xpath
+    locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='阿里巴巴']/../..//*[@text='已添加']"
+    action: len > 0
+reset:
+  - by: xpath
+    locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='阿里巴巴']/../..//*[@text='已添加']"
+    action: click
+
 #- by: xpath
 #  locator: //*[@resource-id='android:id/tabhost']//*[@text='行情']
 #  action: click

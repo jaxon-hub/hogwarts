@@ -15,10 +15,12 @@ class Test_case:
 
     def test_search(self):
         search_re = self.main.goto_market().goto_search()
-        assert search_re.search_for_name("阿里巴巴").is_select("阿里巴巴")
+        assert search_re.search_for_name().is_select()
+        if search_re.is_select():
+            search_re.reset()
 
-    # def teardown_class(self):
-    #     self.app.close_driver()
+    def teardown_class(self):
+        self.app.close_driver()
 
     #
     # @pytest.mark.parametrize("value, value1", yaml.safe_load(open("../page/test_date.yaml")))
