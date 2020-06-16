@@ -6,20 +6,21 @@ searchpage:
   - by: id
     locator: "com.xueqiu.android:id/search_input_text"
     action: send_keys
-    key: alibaba
+    key: ${name}
   - by: xpath
-    locator: "//*[@resource-id='com.xueqiu.android:id/code' and @text='BABA']"
+    locator: "//*[@resource-id='com.xueqiu.android:id/name'and @text='${name}']"
     action: click
+add:
   - by: xpath
-    locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='阿里巴巴']/../..//*[@text='加自选']"
+    locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='${name}']/../..//*[@text='加自选']"
     action: click
 isselect:
   - by: xpath
-    locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='阿里巴巴']/../..//*[@text='已添加']"
+    locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='${name}']/../..//*[@text='已添加']"
     action: len > 0
 reset:
   - by: xpath
-    locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='阿里巴巴']/../..//*[@text='已添加']"
+    locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='${name}']/../..//*[@text='已添加']"
     action: click
 
 #- by: xpath

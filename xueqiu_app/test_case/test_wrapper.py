@@ -36,11 +36,9 @@ if __name__ == '__main__':
     # ex(tmp)()
     # tmp()
     # print(aa())
-    _black_list = [
+    a=[1,2]
+    if 2:
+        print('111')
+    else:
+        print('222')
 
-        (MobileBy.ID, "com.xueqiu.android:id/tv_left"),  # 评价弹窗
-        (MobileBy.ID, "com.xueqiu.android:id/tv_agree"),  # 同意协议弹窗
-    ]
-    for x in _black_list:
-        b = x
-        print(b)

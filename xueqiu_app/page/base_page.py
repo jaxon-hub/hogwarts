@@ -2,6 +2,7 @@
 __author__ = 'jaxon'
 __time__ = '2020/6/2 5:49 下午'
 """
+import json
 import logging
 
 import yaml
@@ -12,6 +13,7 @@ from xueqiu_app.page.wrapper import handle_black
 
 
 class BasePage:
+    _params = {}
     logging.basicConfig(level=logging.INFO)
     _driver: WebDriver
     _black_list = [
@@ -56,40 +58,65 @@ class BasePage:
         return element_text
 
     def load_yaml(self, file_path, page_name):
-        try:
-            with open(file_path, encoding="utf-8") as f:
-                yaml_date:dict = yaml.safe_load(f)
-            if page_name in yaml_date.keys():
-                for date in yaml_date[page_name]:
-                    if "by" in date.keys():
-                        element = self.find(date["by"],date["locator"])
-                        if date["action"] == "click":
-                            element.click()
-                        if date["action"] == "send_keys":
-                            element.send_keys(date["key"])
-                        if date["action"] == "len > 0":
-                            eles = self.finds(date["by"],date["locator"])
-                            return len(eles) > 0
-        except Exception as e:
-            logging.info(f"load_yaml方法异常：{e}，文件路径为：{file_path}")
-            raise e
+        with open(file_path, encoding="utf-8") as f:
+            yaml_date:dict = yaml.safe_load(f)
+        raw = json.dumps(yaml_date)
+        for key,value in self._params.items():
+            raw = raw.replace("${"+key+"}", value)
+        yaml_date = json.loads(raw)
+        """↑ 替换name为传进来的参数"""
+        """↓ 解析yaml文件"""
+        if page_name in yaml_date.keys():
+            for date in yaml_date[page_name]:
+                logging.info(f"替换后的yaml文件内容为：{yaml_date[page_name]}")
+                if "by" in date.keys():
+                    element = self.find(date["by"],date["locator"])
+                    if date["action"] == "click":
+                        element.click()
+                    if date["action"] == "send_keys":
+                        element.send_keys(date["key"])
+                    if date["action"] == "len > 0":
+                        eles = self.finds(date["by"],date["locator"])
+                        return len(eles) > 0
+    #
+    # def load_yaml(self, path, name):
+    #     with open(path, encoding="utf-8") as f:
+    #         # name = inspect.stack()[1].function
+    #         steps = yaml.safe_load(f)[name]
+    #     raw = json.dumps(steps)
+    #     for key, value in self._params.items():
+    #         raw = raw.replace('${' + key + '}', value)
+    #     steps = json.loads(raw)
+    #     for step in steps:
+    #         if "action" in step.keys():
+    #             action = step["action"]
+    #             if "click" == action:
+    #                 self.find(step["by"], step["locator"]).click()
+    #             if "send" == action:
+    #                 self.find(step["by"], step["locator"]).send_keys(step["key"])
+    #             if "len > 0" == action:
+    #                 eles = self.finds(step["by"], step["locator"])
+    #                 return len(eles) > 0
 
-    # def load_yaml(self, file_path):
-    #     try:
-    #         with open(file_path) as f:
-    #             yaml_date = yaml.safe_load(f)
-    #         for date in yaml_date:
-    #             if "action" in date.keys():
-    #                 if date["action"] == "click":
-    #                     print(date["by"], date["locator"])
-    #                     print(date["action"])
-    #                     self.find(date["by"], date["locator"]).click()
-    #     except Exception as e:
-    #         logging.info(f"load_yaml方法异常：{e}，文件路径为：{file_path}")
-    #         raise e
 
+def test111(file_path, di, page_name):
 
+    with open(file_path, encoding="utf-8") as f:
+        yaml_date: dict = yaml.safe_load(f)
+    raw = json.dumps(yaml_date)
+    for key, value in di.items():
+        print(f"key:{key}")
+        raw = raw.replace("${" + key + "}", value)
+    yaml_date = json.loads(raw)
+    if page_name in yaml_date.keys():
+        for date in yaml_date[page_name]:
+            # logging.info(f"替换后的yaml文件内容为：{yaml_date[page_name]}")
+            if "by" in date.keys():
+                print(f'by:{date["by"], date["locator"]}')
+    return yaml_date
 if __name__ == '__main__':
     a = BasePage()
+    params = {"name":"123"}
     filepath = "../page/page.yaml"
-    print(a.load_yaml(filepath,"searchpage"))
+    # print(a.load_yaml(filepath,params))
+    print(test111(filepath,params,"searchpage"))

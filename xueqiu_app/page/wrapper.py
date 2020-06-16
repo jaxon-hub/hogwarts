@@ -46,5 +46,5 @@ def handle_black(func):
                     elelist[0].click()
                     # break
                     return handle_windows(*args, **kwargs)
-        raise e
+            raise e
     return handle_windows
