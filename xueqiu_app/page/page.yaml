@@ -17,7 +17,7 @@ add:
 isselect:
   - by: xpath
     locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='${name}']/../..//*[@text='已添加']"
-    action: len > 0
+    action: assert
 reset:
   - by: xpath
     locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='${name}']/../..//*[@text='已添加']"

@@ -32,13 +32,16 @@ def aa():
     except Exception as e:
         print('pppp')
 
+def bb():
+    a = [1]
+    return len(a) < 0
+
 if __name__ == '__main__':
     # ex(tmp)()
     # tmp()
     # print(aa())
-    a=[1,2]
-    if 2:
+    if bb():
+        # a[0] = 3
         print('111')
-    else:
-        print('222')
+    print(2+1)
 

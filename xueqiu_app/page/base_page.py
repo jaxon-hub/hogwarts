@@ -75,9 +75,14 @@ class BasePage:
                         element.click()
                     if date["action"] == "send_keys":
                         element.send_keys(date["key"])
-                    if date["action"] == "len > 0":
-                        eles = self.finds(date["by"],date["locator"])
-                        return len(eles) > 0
+                    # if date["action"] == "len > 0":
+                    #     eles = self.finds(date["by"],date["locator"])
+                    #     return len(eles) > 0
+                    if date['action'] == "assert":
+                        if element:
+                            return True
+                        else:
+                            return False
     #
     # def load_yaml(self, path, name):
     #     with open(path, encoding="utf-8") as f:
@@ -97,26 +102,8 @@ class BasePage:
     #             if "len > 0" == action:
     #                 eles = self.finds(step["by"], step["locator"])
     #                 return len(eles) > 0
-
-
-def test111(file_path, di, page_name):
-
-    with open(file_path, encoding="utf-8") as f:
-        yaml_date: dict = yaml.safe_load(f)
-    raw = json.dumps(yaml_date)
-    for key, value in di.items():
-        print(f"key:{key}")
-        raw = raw.replace("${" + key + "}", value)
-    yaml_date = json.loads(raw)
-    if page_name in yaml_date.keys():
-        for date in yaml_date[page_name]:
-            # logging.info(f"替换后的yaml文件内容为：{yaml_date[page_name]}")
-            if "by" in date.keys():
-                print(f'by:{date["by"], date["locator"]}')
-    return yaml_date
 if __name__ == '__main__':
     a = BasePage()
     params = {"name":"123"}
     filepath = "../page/page.yaml"
     # print(a.load_yaml(filepath,params))
-    print(test111(filepath,params,"searchpage"))

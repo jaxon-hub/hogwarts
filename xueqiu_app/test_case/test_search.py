@@ -13,14 +13,12 @@ class Test_case:
         self.app = App()
         self.search = App().start().main().goto_market().goto_search()
 
-    @pytest.mark.parametrize("name",["京东", "阿里巴巴-SW"])
+    @pytest.mark.parametrize("name",yaml.safe_load(open("../test_case/test_search.yaml", encoding="utf-8")))
     def test_search(self, name):
         self.search.search_for_name(name)
         self.search.add(name)
-        # if self.search.is_select(name):
-        #     self.search.reset(name)
-        # self.search.add(name)
         assert self.search.is_select(name)
+        self.search.reset(name)
 
 
     # def teardown_class(self):
