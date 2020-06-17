@@ -38,7 +38,6 @@ class App(BasePage):
 
     def close_driver(self):
         self._driver.quit()
-        return self
 
     def main(self) -> Mainpage:
         return Mainpage(self._driver)

@@ -1,6 +1,9 @@
 """
 __author__ = 'jaxon'
 __time__ = '2020/6/2 7:11 下午'
+run_appium: appium --session-override
+run: pytest test_search.py --alluredir=./result
+report: allure serve ./result
 """
 import pytest
 import yaml
@@ -21,8 +24,8 @@ class Test_case:
         self.search.reset(name)
 
 
-    # def teardown_class(self):
-    #     self.app.close_driver()
+    def teardown_class(self):
+        self.app.close_driver()
     #
     # @pytest.mark.parametrize("value, value1", yaml.safe_load(open("../page/test_date.yaml")))
     # def test_date_config(self, value, value1):

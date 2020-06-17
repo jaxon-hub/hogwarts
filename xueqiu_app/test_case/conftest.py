@@ -16,7 +16,8 @@ def record():
     cmd = shlex.split("scrcpy --no-display --record tmp.mp4")
     p = subprocess.Popen(cmd, shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     yield
-    os.kill(p.pid, signal.SIGTERM)
+    # os.kill(p.pid, signal.CTRL_C_EVENT)  # win
+    os.kill(p.pid, signal.SIGTERM) # mac
     time.sleep(1)
     with open("tmp.mp4", "rb") as f:
         content = f.read()
