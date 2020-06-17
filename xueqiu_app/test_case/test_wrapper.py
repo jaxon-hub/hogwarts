@@ -32,16 +32,17 @@ def aa():
     except Exception as e:
         print('pppp')
 
-def bb():
+def bb(func):
     a = [1]
+    print(func.__name__)
     return len(a) < 0
+
+@bb
+def cc():
+    return "111"
 
 if __name__ == '__main__':
     # ex(tmp)()
     # tmp()
     # print(aa())
-    if bb():
-        # a[0] = 3
-        print('111')
-    print(2+1)
-
+    pass

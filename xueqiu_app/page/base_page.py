@@ -2,6 +2,7 @@
 __author__ = 'jaxon'
 __time__ = '2020/6/2 5:49 下午'
 """
+import inspect
 import json
 import logging
 
@@ -26,6 +27,9 @@ class BasePage:
 
     def __init__(self, driver:WebDriver = None):
         self._driver = driver
+
+    def set_implicitly(self, time):
+        return self._driver.implicitly_wait(time)
 
     @handle_black
     def find(self, locator, value:str = None):
@@ -57,7 +61,8 @@ class BasePage:
 
         return element_text
 
-    def load_yaml(self, file_path, page_name):
+    def load_yaml(self, file_path):
+        page_name = inspect.stack()[1].function     # 通过栈获取调用者的函数名
         with open(file_path, encoding="utf-8") as f:
             yaml_date:dict = yaml.safe_load(f)
         raw = json.dumps(yaml_date)
@@ -83,25 +88,10 @@ class BasePage:
                             return True
                         else:
                             return False
-    #
-    # def load_yaml(self, path, name):
-    #     with open(path, encoding="utf-8") as f:
-    #         # name = inspect.stack()[1].function
-    #         steps = yaml.safe_load(f)[name]
-    #     raw = json.dumps(steps)
-    #     for key, value in self._params.items():
-    #         raw = raw.replace('${' + key + '}', value)
-    #     steps = json.loads(raw)
-    #     for step in steps:
-    #         if "action" in step.keys():
-    #             action = step["action"]
-    #             if "click" == action:
-    #                 self.find(step["by"], step["locator"]).click()
-    #             if "send" == action:
-    #                 self.find(step["by"], step["locator"]).send_keys(step["key"])
-    #             if "len > 0" == action:
-    #                 eles = self.finds(step["by"], step["locator"])
-    #                 return len(eles) > 0
+    def screen_short(self,name):
+        """截图"""
+        self._driver.save_screenshot(name)
+
 if __name__ == '__main__':
     a = BasePage()
     params = {"name":"123"}

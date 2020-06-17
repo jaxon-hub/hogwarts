@@ -1,8 +1,8 @@
-mainpage:
+goto_market:
   - by: xpath
     locator: "//*[@resource-id='android:id/tabhost']//*[@text='行情']"
     action: click
-searchpage:
+search_for_name:
   - by: id
     locator: "com.xueqiu.android:id/search_input_text"
     action: send_keys
@@ -14,7 +14,7 @@ add:
   - by: xpath
     locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='${name}']/../..//*[@text='加自选']"
     action: click
-isselect:
+is_select:
   - by: xpath
     locator: "//*[@resource-id='com.xueqiu.android:id/stockName' and @text='${name}']/../..//*[@text='已添加']"
     action: assert
