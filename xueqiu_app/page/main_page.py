@@ -16,5 +16,7 @@ class Mainpage(BasePage):
 
     def goto_market(self):
         """主页--行情"""
+        self.set_implicitly(10)
         self.load_yaml("../page/page.yaml")
+        self.set_implicitly(3)
         return Market(self._driver)

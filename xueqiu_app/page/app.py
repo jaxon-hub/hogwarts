@@ -28,7 +28,7 @@ class App(BasePage):
             # self._driver.launch_app() #启动app
             self._driver.start_activity(self._appPackage, self._appActivity) # 如果Activit存在，则启动Activity，不存在则启动app
         # 隐式等待
-        self._driver.implicitly_wait(10)
+        self._driver.implicitly_wait(3)
         return self
 
     def restart(self):
