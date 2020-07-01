@@ -88,6 +88,7 @@ class BasePage:
                             return True
                         else:
                             return False
+
     def screen_short(self,name):
         """截图"""
         self._driver.save_screenshot(name)
