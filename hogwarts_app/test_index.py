@@ -29,7 +29,7 @@ class Testwework:
         self.name = ReturnDate().return_name()
         self.phone = ReturnDate().return_phone()
 
-    def aatest_maill(self):
+    def test_maill(self):
         print("添加联系人")
         self.driver.find_element(By.XPATH, "//*[@resource-id='com.tencent.wework:id/ggc']/android.widget.RelativeLayout[2]").click()
         self.driver.find_element(By.XPATH, "//*[@text='添加成员']").click()
@@ -47,15 +47,12 @@ class Testwework:
     def test_delete_mail(self):
         print("删除联系人")
         self.driver.find_element(By.XPATH,"//*[@resource-id='com.tencent.wework:id/ggc']/android.widget.RelativeLayout[2]").click()
-        self.driver.find_element(By.XPATH, "//*[@text='王岩']").click()
+        self.driver.find_element(By.XPATH, "//*[@text='孙斌']").click()
         self.driver.find_element(By.ID, "com.tencent.wework:id/gvd").click()
         self.driver.find_element(By.XPATH, "//android.widget.TextView[@text='编辑成员']").click()
-        # TouchAction(self.driver).press(x=81, y=1121).move_to(x=86, y=636).release().perform()
-        action = TouchAction(self.driver)
-        action.press(x=81, y=1356).wait(2000).move_to(x=81, y=121).wait(1000).release().perform()
-        # self.driver.flick(10,1356,0,121)
         time.sleep(10)
-        # self.driver.find_element(By.XPATH, "//android.widget.TextView[@text='删除成员']").click()
+        self.driver.swipe(547, 1433, 507, 747)
+        self.driver.find_element(By.XPATH, "//android.widget.TextView[@text='删除成员']").click()
         # self.driver.find_element(By.ID, "com.tencent.wework:id/b_a").click()
 
     # def teardown_class(self):

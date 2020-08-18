@@ -1,0 +1,17 @@
+test_create:
+ "userid": ${userid}
+ "name": ${name}
+ "mobile": ${mobile}
+ "department": [1]
+
+test_get:
+ "userid": ${userid}
+
+test_update:
+ "userid": ${userid}
+ "name": ${name}
+ "mobile": ${mobile}
+ "department": [1]
+
+test_delete:
+ "userid": ${userid}
